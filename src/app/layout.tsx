@@ -1,6 +1,8 @@
 import "./globals.css";
 import { Figtree } from "next/font/google";
 import localFont from "next/font/local";
+import { Footer } from "./_components/footer";
+import { Header } from "./_components/header";
 
 const figtree = Figtree({
   display: "swap",
@@ -47,12 +49,12 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      className={`${figtree.variable} ${vazir.variable}`}
+      className={`dark ${figtree.variable} ${vazir.variable}`}
       dir='rtl'>
-      <body>
-        <header className='w-full bg-slate-500'>دوره معماری ریکت</header>
+      <body className='min-h-screen grid grid-rows-[80px_1fr_auto] dark:bg-base-100 dark:text-base-content'>
+        <Header />
         <div className='flex-1 flex'>{children}</div>
-        <footer className='w-full bg-slate-500'>footer</footer>
+        <Footer />
       </body>
     </html>
   );
