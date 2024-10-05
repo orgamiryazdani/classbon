@@ -7,6 +7,7 @@ const getTextColor = (backgroundColor: string): string =>
 export const Colors: React.FC = () => (
   <div
     dir='ltr'
+    lang="en"
     className='flex flex-wrap justify-center'>
     {Object.entries(tailwindColors).map(([name, color]) => (
       <ColorBox
