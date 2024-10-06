@@ -1,10 +1,11 @@
 import Image from "next/image";
+import { Button } from "./_components/button";
 
 export default function Home() {
   return (
     <>
       <section className='bg-hero-pattern bg-no-repeat bg-center mt-5 xl:mt-20 xl:bg-left'>
-        <div className="container flex flex-col-reverse items-center xl:flex-row">
+        <div className='container flex flex-col-reverse items-center xl:flex-row'>
           <div className='flex flex-col gap-5 mt-12 pb-5 text-center xl:text-right'>
             <h3 className='text-xl dark:text-info xl:text-right'>
               خوش اومدی به ...
@@ -17,6 +18,18 @@ export default function Home() {
               کلاسبن می تونی بدون محدودیت به قله های بالاتر صعود کنی. ما همیشه
               هواتو داریم.
             </p>
+            <div className='mt-5 flex gap-4'>
+              <Button
+                variant='primary'
+                size='large'>
+                دوره های ریکت و نکست
+              </Button>
+              <Button
+                variant='neutral'
+                size='large'>
+                مشاوره برنامه نویسی
+              </Button>
+            </div>
             <Image
               src='/images/frameworks.png'
               className='grayscale mt-4 opacity-70 m-auto xl:m-0'
