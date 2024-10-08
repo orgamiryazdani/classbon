@@ -1,4 +1,4 @@
-import { CourseLevel } from "@/enums/course-level.enums";
+import { CourseLevel } from "@/enums/course-level.enum";
 
 export interface CourseSummary {
     id: number;
