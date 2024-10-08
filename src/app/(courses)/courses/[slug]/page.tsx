@@ -1,8 +1,10 @@
 import { API_URL } from "@/configs/global";
 import { CourseAside } from "./_components/course-aside";
-import { CourseDetailsType } from "@/types/course-details.interface";
+import { CourseDetails as CourseDetailsType } from "@/types/course-details.interface";
 import { Tab } from "@/types/tab.type";
 import { Tabs } from "@/app/_components/tabs";
+import { Accordion } from "@/app/_components/accordion";
+import { Accordion as AccordionType } from "@/types/accordion";
 
 export async function generateStaticParams() {
   const slugs = await fetch(`${API_URL}/courses/slugs`).then((res) =>
@@ -26,6 +28,12 @@ export default async function CourseDetails({
   const { slug } = params;
   const course = await getCourse(slug);
 
+  const faqs: AccordionType[] = course.frequentlyAskedQuestions.map((faq) => ({
+    id: faq.id,
+    title: faq.question,
+    content: faq.answer,
+  }));
+
   const tabs: Tab[] = [
     {
       label: "مشخصات دوره",
@@ -37,7 +45,7 @@ export default async function CourseDetails({
     },
     {
       label: "سوالات متداول",
-      content: "accordion components",
+      content: <Accordion data={faqs} />,
     },
   ];
 
@@ -58,7 +66,7 @@ export default async function CourseDetails({
         <CourseAside {...course} />
       </div>
       <div className='col-span-10 xl:col-span-6'>
-        <Tabs tabs={tabs}/>
+        <Tabs tabs={tabs} />
       </div>
       <div className='col-span-10 xl:col-span-4 bg-warning'></div>
     </div>
