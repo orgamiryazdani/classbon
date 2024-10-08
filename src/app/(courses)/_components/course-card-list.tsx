@@ -1,4 +1,4 @@
-import { CourseSummary } from "@/types/course-summery.interface";
+import { CourseSummary } from "@/types/course-summary.interface";
 import { CourseCard } from "./course-card";
 
 type CourseCardListProps = {
