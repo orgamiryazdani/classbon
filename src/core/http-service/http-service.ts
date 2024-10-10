@@ -1,6 +1,13 @@
 import { API_URL } from "@/configs/global";
-import { ApiError } from "@/types/http-errors.interface";
-import axios, { AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from "axios";
+
+import {
+    ApiError,
+} from "@/types/http-errors.interface";
+import axios, {
+    AxiosRequestConfig,
+    AxiosRequestHeaders,
+    AxiosResponse,
+} from "axios";
 import { errorHandler, networkErrorStrategy } from "./http-error-strategies";
 
 const httpService = axios.create({
@@ -19,11 +26,11 @@ httpService.interceptors.response.use(
             const statusCode = error?.response?.status;
             if (statusCode >= 400) {
                 const errorData: ApiError = error.response?.data;
-                
-                errorHandler[statusCode](errorData)
+
+                errorHandler[statusCode](errorData);
             }
         } else {
-            networkErrorStrategy()
+            networkErrorStrategy();
         }
     }
 );
@@ -42,8 +49,8 @@ async function readData<T>(
 ): Promise<T> {
     const options: AxiosRequestConfig = {
         headers: headers,
-        method: 'GET'
-    }
+        method: "GET",
+    };
     return await apiBase<T>(url, options);
 }
 
@@ -53,9 +60,9 @@ async function createData<TModel, TResult>(
     headers?: AxiosRequestHeaders
 ): Promise<TResult> {
     const options: AxiosRequestConfig = {
-        method: 'POST',
+        method: "POST",
         headers: headers,
-        data: JSON.stringify(data)
+        data: JSON.stringify(data),
     };
 
     return await apiBase<TResult>(url, options);
@@ -67,9 +74,9 @@ async function updateData<TModel, TResult>(
     headers?: AxiosRequestHeaders
 ): Promise<TResult> {
     const options: AxiosRequestConfig = {
-        method: 'PUT',
+        method: "PUT",
         headers: headers,
-        data: JSON.stringify(data)
+        data: JSON.stringify(data),
     };
 
     return await apiBase<TResult>(url, options);
@@ -87,4 +94,4 @@ async function deleteData(
     return await apiBase(url, options);
 }
 
-export { createData, readData, updateData, deleteData }
+export { createData, readData, updateData, deleteData };

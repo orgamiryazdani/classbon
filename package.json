@@ -13,6 +13,8 @@
     "test:generate-output": "jest --json --outputFile=.jest-test-results.json"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.59.8",
+    "@tanstack/react-query-devtools": "^5.59.8",
     "axios": "^1.7.7",
     "classnames": "^2.5.1",
     "colord": "^2.9.3",
