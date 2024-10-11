@@ -2,10 +2,12 @@
 
 import { useParams } from "next/navigation";
 import { useCourseComments } from "../../_apis/get-comments";
+import { Comment } from "@/app/_components/comment";
+import { TextPlaceholder } from "@/app/_components/placeholders";
 
 const CourseComments = () => {
   const { slug } = useParams();
-  const { data: comments } = useCourseComments({
+  const { data: comments, isLoading } = useCourseComments({
     params: {
       slug: slug as string,
       page: 1,
@@ -14,9 +16,15 @@ const CourseComments = () => {
 
   return (
     <>
-      {comments?.data.map((p) => (
-        <p key={p.id} className="mb-8">{p.commentText}</p>
+      {comments?.data.map((comment) => (
+        <Comment
+          key={`comment-${comment.id}`}
+          {...comment}
+          variant='info'
+        />
       ))}
+
+      {isLoading && <TextPlaceholder />}
     </>
   );
 };
