@@ -11,7 +11,7 @@ type GetCommentsOptions = {
 
 const getComments = ({ params }: GetCommentsOptions): Promise<CourseCommentList> => {
     const { slug, page } = params;
-    const url = `/courses/${slug}/commendts?page=${page}`;
+    const url = `/courses/${slug}/comments?page=${page}`;
     return readData(url)
 }
 

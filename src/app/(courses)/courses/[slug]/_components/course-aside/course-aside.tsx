@@ -1,5 +1,4 @@
 import { Price } from "@/app/_components/price";
-import { CourseAsideProps } from "./course-aside.types";
 import { Rating } from "@/app/_components/rating";
 import {
   IconArrowLeftFill,
@@ -17,6 +16,7 @@ import { Variant } from "@/app/_components/types/variant.type";
 import { Avatar } from "@/app/_components/avatar";
 import { API_URL } from "@/configs/global";
 import { Button } from "@/app/_components/button/button";
+import { CourseAsideProps } from "./course-aside.types";
 
 const levelVariant: Record<CourseLevel, Variant> = {
   0: "warning",
