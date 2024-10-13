@@ -1,7 +1,5 @@
-export default async function Verify(){
-    return(
-        <div>
-            <h1>Verify page</h1>
-        </div>
-    )
+import SignInForm from "../signin/components/signin-form";
+
+export default async function Verify() {
+  return <SignInForm />;
 }

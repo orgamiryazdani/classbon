@@ -1,7 +1,9 @@
-export default async function SignIn(){
-    return(
-        <div>
-            <h1>signin page</h1>
-        </div>
-    )
+import Link from "next/link";
+
+export default async function SignIn() {
+  return (
+    <div>
+      <Link href='/verify'>verify</Link>
+    </div>
+  );
 }
