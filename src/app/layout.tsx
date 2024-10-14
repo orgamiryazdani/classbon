@@ -5,6 +5,7 @@ import { Footer } from "./_components/footer";
 import { Header } from "./_components/header";
 import QueryProvider from "@/providers/react-query-provider";
 import NextTopLoader from "nextjs-toploader";
+import { Notifications } from "./_components/notification";
 
 const figtree = Figtree({
   display: "swap",
@@ -55,6 +56,7 @@ export default function RootLayout({
       dir='rtl'>
       <body className='min-h-screen grid grid-rows-[80px_1fr_auto] dark:bg-base-100 dark:text-base-content'>
         <NextTopLoader showSpinner={false} color="var(--color-primary)"/>
+        <Notifications />
         <QueryProvider>
           <Header />
           <main>{children}</main>

@@ -1,11 +1,12 @@
 "use client";
 
 import { Button } from "@/app/_components/button/button";
-import { SignIn } from "../types/signin.types";
+import { SignIn } from "../_types/signin.types";
 import { useForm } from "react-hook-form";
 import { TextInput } from "@/app/_components/form-input";
-import { useSignIn } from "../api/signin";
+import { useSignIn } from "../_api/signin";
 import { useRouter } from "next/navigation";
+import { useNotificationStore } from "../../../../stores/notification.store";
 
 const SignInForm = () => {
   const {
@@ -17,14 +18,22 @@ const SignInForm = () => {
 
   const router = useRouter();
 
-  const signin = useSignIn({
+  const showNotification = useNotificationStore(
+    (state) => state.showNotification,
+  );
+
+  const signIn = useSignIn({
     onSuccess: () => {
       router.push(`/verify?mobile=${getValues("mobile")}`);
+      showNotification({
+        message: "کد تایید به شماره شما ارسال شد",
+        type: "info",
+      });
     },
   });
 
   const onSubmit = (data: SignIn) => {
-    signin.submit(data);
+    signIn.submit(data);
   };
 
   return (
@@ -54,7 +63,7 @@ const SignInForm = () => {
         <Button
           type='submit'
           variant='primary'
-          isLoading={signin.isPending}>
+          isLoading={signIn.isPending}>
           تایید و دریافت کد
         </Button>
       </form>
