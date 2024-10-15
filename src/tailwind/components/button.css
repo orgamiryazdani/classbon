@@ -85,7 +85,7 @@
 
   /* btn variants */
   &-ghost {
-    @apply border border-transparent bg-transparent text-current  outline-current;
+    @apply border border-transparent bg-transparent text-current outline-current;
     @media (hover: hover) {
       &:hover {
         @apply border-opacity-0 dark:bg-base-content bg-opacity-20;
@@ -93,7 +93,7 @@
     }
   }
   &-link {
-    @apply border-transparent bg-transparent dark:text-primary   outline-none h-auto px-1;
+    @apply !border-transparent !bg-transparent dark:text-primary !outline-none h-auto px-1;
     @media (hover: hover) {
       &:hover {
         @apply border-transparent bg-transparent underline;
@@ -203,14 +203,15 @@
     @apply w-full;
   }
   &-square {
-    @apply h-12 w-12 p-0;
     &:where(.btn-xs) {
       @apply h-6 w-6 p-0;
     }
     &:where(.btn-sm) {
       @apply h-8 w-8 p-0;
     }
-
+    &:where(.btn-md) {
+      @apply h-12 w-12 p-0;
+    }
     &:where(.btn-lg) {
       @apply h-16 w-16 p-0;
     }
