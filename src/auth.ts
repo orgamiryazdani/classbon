@@ -25,7 +25,7 @@ declare module "next-auth/jwt" {
     }
 }
 
-export class AuthroizeError extends CredentialsSignin {
+export class AuthorizeError extends CredentialsSignin {
     problem: Problem;
     constructor(err: Problem) {
         super();
@@ -61,7 +61,7 @@ export const {
                         accessToken: user.token,
                     };
                 } catch (error: unknown) {
-                    throw new AuthroizeError(error as Problem);
+                    throw new AuthorizeError(error as Problem);
                 }
             },
         }),
