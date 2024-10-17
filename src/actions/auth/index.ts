@@ -3,7 +3,8 @@
 import { OperationResult } from "@/types/operation-result";
 import { serverActionWrapper } from "../server-action-wrapper";
 import { createData } from "@/core/http-service/http-service";
-import { SendAuthCode } from "@/app/(auth)/verify/_types/verify-user.type";
+import { SendAuthCode, VerifyUserModel } from "@/app/(auth)/verify/_types/verify-user.type";
+import { AuthorizeError, signIn, signOut } from "@/auth";
 import { SignIn } from "@/app/(auth)/signin/_types/signin.types";
 
 export async function signInAction(
@@ -39,4 +40,29 @@ export async function sendAuthCode(
                 mobile,
             })
     );
+}
+
+export async function verify(prevState: OperationResult<void> | undefined, model: VerifyUserModel) {
+    try {
+        await signIn("credentials", {
+            username: model.username,
+            code: model.code,
+            redirect: false
+        });
+        return {
+            isSuccess: true,
+        } satisfies OperationResult<void>
+    } catch (error) {
+        if (error instanceof AuthorizeError) {
+            return {
+                isSuccess: false,
+                error: error.problem!
+            } satisfies OperationResult<void>
+        }
+        throw new Error('');
+    }
+}
+
+export async function logout() {
+    await signOut();
 }

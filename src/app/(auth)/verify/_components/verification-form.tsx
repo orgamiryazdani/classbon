@@ -6,7 +6,7 @@ import { Button } from "@/app/_components/button/button";
 import { Timer } from "@/app/_components/timer/timer";
 import { TimerRef } from "@/app/_components/timer/timer.types";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import {
   useNotificationStore,
 } from "../../../../stores/notification.store";
@@ -14,7 +14,9 @@ import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { VerifyUserModel } from "../_types/verify-user.type";
 import { useFormState } from "react-dom";
-import { sendAuthCode } from "@/actions/auth";
+import { sendAuthCode, verify } from "@/actions/auth";
+import { getSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const getTwoMinutesFromNow = () => {
   const time = new Date();
@@ -42,9 +44,27 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
     sendAuthCode,
     null,
   );
+  const [verifyState, verifyAction] = useFormState(verify, undefined);
+
+  const [verifyPendingState, startTransition] = useTransition();
+
+  const router = useRouter();
 
   const params = useSearchParams();
   const username = params.get("mobile")!;
+
+  useEffect(() => {
+    if (verifyState && !verifyState.isSuccess && verifyState?.error?.detail) {
+      showNotification({
+        message: verifyState?.error.detail,
+        type: "error",
+      });
+    } else if (verifyState?.isSuccess) {
+      const fetchSession = async () => await getSession();
+      fetchSession();
+      router.push("/student/courses");
+    }
+  }, [verifyState, showNotification, router]);
 
   useEffect(() => {
     if (
@@ -67,6 +87,13 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
 
   const onSubmit = (data: VerifyUserModel) => {
     data.username = username;
+
+    startTransition(async () => {
+      verifyAction({
+        username: data.username,
+        code: data.code,
+      });
+    });
   };
 
   register("code", {
@@ -79,7 +106,6 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
     authCodeRef.current?.clear();
     sendAuthCodeAction(mobile);
   };
-
   return (
     <>
       <h5 className='text-2xl'>کد تایید</h5>
@@ -114,6 +140,7 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
         <Button
           type='submit'
           variant='primary'
+          isLoading={verifyPendingState}
           isDisabled={!isValid}>
           تایید و ادامه
         </Button>
